@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Overview - Admin Dashboard</title>
+    <link rel="stylesheet" href="overview.css">
+</head>
+<body>
+
+    <div class="container">
+        <!-- Sidebar (same as the first HTML file) -->
+        <div class="sidebar">
+            <div class="logo">
+                <img src="image/whitelogo.png" alt="Logo">
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="overview.html">Overview</a></li>
+                    <li><a href="loan_management.html">Loan Management</a></li>
+                    <li><a href="user_management.html">User Management</a></li>
+                </ul>
+            </nav>
+            <div class="logout">
+                <button>Log Out</button>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="dashboard-header">
+                <h1>Overview</h1>
+            </div>
+
+            <div class="overview-cards">
+                <div class="card">
+                    <h2>Total Loans</h2>
+                    <p>0</p> <!-- This will be updated dynamically -->
+                </div>
+                <div class="card">
+                    <h2>Total Loan Amount</h2>
+                    <p>₱0.00</p> <!-- This will be updated dynamically -->
+                </div>
+                <div class="card">
+                    <h2>Total Repaid Amount</h2>
+                    <p>₱0.00</p> <!-- This will be updated dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Retrieve the stored loan data from localStorage
+            let loansData = JSON.parse(localStorage.getItem("loansData")) || [];
+
+            // Calculate Total Loans (number of loans)
+            const totalLoans = loansData.length;
+
+            // Calculate Total Loan Amount (sum of all loan amounts)
+            const totalLoanAmount = loansData.reduce((total, loan) => total + loan.loanAmount, 0);
+
+            // Calculate Total Repaid Amount (sum of all loan amounts with interest)
+            const totalRepaidAmount = loansData.reduce((total, loan) => total + parseFloat(loan.totalWithInterest), 0);
+
+            // Update the content on the page with the calculated values
+            document.querySelector(".card:nth-child(1) p").textContent = totalLoans;
+            document.querySelector(".card:nth-child(2) p").textContent = `₱${totalLoanAmount.toFixed(2)}`;
+            document.querySelector(".card:nth-child(3) p").textContent = `₱${totalRepaidAmount.toFixed(2)}`;
+        });
+    </script>
+
+    <script>
+        // Get all sidebar links
+        const sidebarLinks = document.querySelectorAll('.sidebar nav ul li a');
+        
+        // Add click event listener to each link
+        sidebarLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                // Remove 'active' class from all links
+                sidebarLinks.forEach(link => link.classList.remove('active'));
+        
+                // Add 'active' class to the clicked link
+                this.classList.add('active');
+            });
+        });
+    </script>
+
+</body>
+</html>

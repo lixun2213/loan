@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan Management - Admin Dashboard</title>
+    <link rel="stylesheet" href="loan_management.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo">
+                <img src="image/whitelogo.png" alt="Logo">
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="overview.html">Overview</a></li>
+                    <li><a href="loan_management.html" class="active">Loan Management</a></li>
+                    <li><a href="user_management.html">User Management</a></li>
+                </ul>
+            </nav>
+            <div class="logout">
+                <button>Log Out</button>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <header>
+                <div class="search-bar">
+                    <input type="text" placeholder="Search..." class="search-input">
+                </div>
+            </header>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Loan Amount</th>
+                        <th>Loan Term</th>
+                        <th>Documents</th>
+                        <th>Application</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Example Row -->
+                    <tr>
+                        <td>John Doe</td>
+                        <td>$10,000</td>
+                        <td>5 years</td>
+                        <td>
+                            <button class="view-doc-btn" data-doc="path/to/john-doe-document.jpg">View Document</button>
+                            <button class="approve-btn">Approve</button>
+                            <button class="reject-btn">Reject</button>
+                        </td>
+                    </tr>
+                    <!-- More rows -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Modal for Viewing Document -->
+    <div id="doc-modal" class="modal">
+        <div class="modal-content">
+            <span id="close-modal" class="close">&times;</span>
+            <h3>Uploaded Document</h3>
+            <img id="uploaded-doc" src="" alt="Uploaded Document" />
+        </div>
+    </div>
+
+    <script>
+        // Modal and Document Viewing Functionality
+        const modal = document.getElementById("doc-modal");
+        const uploadedDoc = document.getElementById("uploaded-doc");
+        const closeModal = document.getElementById("close-modal");
+
+        // Open modal and show document
+        document.querySelectorAll(".view-doc-btn").forEach(button => {
+            button.addEventListener("click", () => {
+                const docPath = button.dataset.doc;
+                uploadedDoc.src = docPath; // Set the document source
+                modal.style.display = "flex";
+            });
+        });
+
+        // Close modal
+        closeModal.addEventListener("click", () => {
+            modal.style.display = "none";
+        });
+
+        // Close modal when clicking outside content
+        window.addEventListener("click", (e) => {
+            if (e.target === modal) {
+                modal.style.display = "none";
+            }
+        });
+    </script>
+</body>
+</html>
